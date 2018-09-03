@@ -12,7 +12,7 @@ It may work on other distros.
 
 ## Configuring Kong
 
-Configuring a new api is easy, simply call `kongfig::setup` with an array of apis and consumers you want configured.
+Configuring a new api is easy, simply call `kongfig::setup` with an array of apis, consumers and (optionally) upstreams you want configured.
 
 ```puppet
 $apis = [
@@ -55,11 +55,26 @@ $consumers = [
   }
 ]
 
+$upstreams = [
+  {
+    'name' => 'test-api.internal.example.com',
+    'targets' => [
+      {
+        'target' => '10.0.0.21'
+      },
+      {
+        'target' => '10.0.0.22'
+      }
+    ]
+  }
+]
+
 kongfig::setup { 'test-api':
   kong_server => '127.0.0.1',
   kong_port   => 8001,
   apis        => $apis,
-  consumers   => $consumers
+  consumers   => $consumers,
+  upstreams   => $upstreams,
 }
 ```
 
