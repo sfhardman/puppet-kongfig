@@ -60,6 +60,7 @@ define kongfig::setup (
 
   file { $config:
     ensure  => file,
+    mode    => '600',
     content => sorted_json(merge($host, $api_hash, $consumer_hash, $plugins_hash, $upstreams_hash), true, 4),
     require => [File[$kongfig::directory], Package['kongfig']],
   }
